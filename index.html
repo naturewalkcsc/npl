@@ -18,16 +18,22 @@
         }
         .container {
             display: flex;
+            flex-direction: column;
             width: 100%;
             height: 100%;
         }
         .panel {
-            flex: 1;
             border: 1px solid #ccc;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .panel.top {
+            flex: 8;
+        }
+        .panel.bottom {
+            flex: 2;
         }
         .panel iframe {
             width: 100%;
@@ -38,10 +44,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="panel">
+        <div class="panel top">
             <div id="youtube-live"></div>
         </div>
-        <div class="panel">
+        <div class="panel bottom">
             <iframe src="https://badminton.double-yellow.be/live?hideColumns=divisionBig&fullscreen=true&eventContains=NPL&layoutBig=G&showOnlyLastX=1"></iframe>
         </div>
     </div>
