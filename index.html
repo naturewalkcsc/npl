@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Stream and URL</title>
+    <title>Live Stream and URL Overlay</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,28 +17,39 @@
             overflow: hidden;
         }
         .container {
-            display: flex;
-            flex-direction: column;
+            position: relative;
             width: 100%;
             height: 100%;
         }
         .panel {
-            border: 1px solid #ccc;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
         .panel.top {
-            flex: 8;
+            z-index: 1;
         }
         .panel.bottom {
-            flex: 2;
+            z-index: 2;
+            top: 0; /* Align to the top */
+            left: 50%;
+            transform: translateX(-50%) scale(0.7); /* Center horizontally and scale down */
+            width: 50%; /* Adjust width as needed */
+            height: auto; /* Maintain aspect ratio */
         }
         .panel iframe {
             width: 100%;
             height: 100%;
             border: none;
+        }
+        #youtube-live {
+            width: 100%;
+            height: 100%;
+            transition: transform 1s ease;
+        }
+        #youtube-live.zoom {
+            transform: scale(1.2); /* Scale up to 120% of original size */
         }
     </style>
 </head>
@@ -54,20 +65,38 @@
 
     <script>
         function onYouTubeIframeAPIReady() {
-            new YT.Player('youtube-live', {
+            const player = new YT.Player('youtube-live', {
                 height: '100%',
                 width: '100%',
                 videoId: 'GOYDh-5z1ks', // Replace YOUR_VIDEO_ID with the actual video ID of the YouTube live stream
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                },
+                playerVars: {
+                    'autoplay': 1, // Auto-play the video
+                    'mute': 1      // Mute the video
                 }
             });
         }
 
         function onPlayerReady(event) {
             event.target.playVideo();
+            // Add zoom class after video starts playing
+            document.getElementById('youtube-live').classList.add('zoom');
         }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                event.target.playVideo(); // Resume playback if paused or ended
+            }
+        }
+
+        (function() {
+            const script = document.createElement('script');
+            script.src = "https://www.youtube.com/iframe_api";
+            document.head.appendChild(script);
+        })();
     </script>
-    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
