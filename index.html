@@ -32,19 +32,21 @@
         }
         .panel.bottom {
             z-index: 2;
-            top: 20px; /* Adjust as needed for spacing from the top edge */
-            right: 15px; /* Adjust as needed for spacing from the right edge */
+            top: 0;
+            right: 0;
+            /*top: 20px;*/ /* Adjust as needed for spacing from the top edge *
+            /*right: 15px;*/ /* Adjust as needed for spacing from the right edge */
             left: auto; /* Ensure it doesn't try to position from the left */
             transform: scale(0.7); /* Keep the scale if you want it smaller */
             width: 40%; /* Keep your desired width */
-            height: 30%; /* Increased height to make the overlay larger */
+            height: 30%; /* Increase height to make the overlay larger */
             transform-origin: top right;
         }
         .panel iframe {
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 8px; /* Added for a cleaner look */
+            border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         #youtube-live {
@@ -68,9 +70,6 @@
     </div>
 
     <script>
-        // Note: The YouTube API script URL is incorrect. It should be:
-        // "https://www.youtube.com/iframe_api"
-        // I've corrected it in the (function() { ... })(); block below.
         function onYouTubeIframeAPIReady() {
             const player = new YT.Player('youtube-live', {
                 height: '100%',
@@ -94,13 +93,12 @@
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-                event.target.playVideo(); // Resume playback if paused or ended
+                event.target.playVideo(); 
             }
         }
 
         (function() {
             const script = document.createElement('script');
-            // Corrected YouTube Iframe API URL
             script.src = "https://www.youtube.com/iframe_api";
             document.head.appendChild(script);
         })();
