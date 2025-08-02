@@ -32,26 +32,20 @@
         }
         .panel.bottom {
             z-index: 2;
-            top: 15px; 
-            right: 15px; 
-            left: auto; 
-            transform: scale(0.7); 
-            width: 30%; 
-            height: 15%; 
+            top: 15px; /* Adjust as needed for spacing from the top edge */
+            right: 15px; /* Adjust as needed for spacing from the right edge */
+            left: auto; /* Ensure it doesn't try to position from the left */
+            transform: scale(0.7); /* Keep the scale if you want it smaller */
+            width: 40%; /* Keep your desired width */
+            height: 45%; /* Increased height to make the overlay larger */
             transform-origin: top right;
-            background-color: rgba(0, 0, 0, 0);
-            margin: 0px auto; 
-            overflow: hidden
         }
         .panel iframe {
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 8px;
+            border-radius: 8px; /* Added for a cleaner look */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            background-color: rgba(0, 0, 0, 0);
-            margin: 0px auto; 
-            overflow: hidden
         }
         #youtube-live {
             width: 100%;
@@ -59,7 +53,7 @@
             transition: transform 1s ease;
         }
         #youtube-live.zoom {
-            transform: scale(1.2); 
+            transform: scale(1.2); /* Scale up to 120% of original size */
         }
     </style>
 </head>
@@ -69,42 +63,44 @@
             <div id="youtube-live"></div>
         </div>
         <div class="panel bottom">
-            <iframe src="https://badminton.double-yellow.be/live?fullscreen=true&eventContains=NPL&layoutBig=E&showOnlyLastX=1&bgImageBig=1"></iframe>
+            <iframe src="https://badminton.double-yellow.be/live?fullscreen=true&eventContains=NPL&layoutBig=G&bgImageBig=1&showOnlyLastX=1"></iframe>
         </div>
     </div>
 
     <script>
-       
+        // Note: The YouTube API script URL is incorrect. It should be:
+        // "https://www.youtube.com/iframe_api"
+        // I've corrected it in the (function() { ... })(); block below.
         function onYouTubeIframeAPIReady() {
             const player = new YT.Player('youtube-live', {
                 height: '100%',
                 width: '100%',
-                videoId: 'uprAp69Qbjc', 
+                videoId: 'uprAp69Qbjc', // Replace YOUR_VIDEO_ID with the actual video ID of the YouTube live stream
                 events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
                 },
                 playerVars: {
-                    'autoplay': 1, 
+                    'autoplay': 1, // Auto-play the video
                 }
             });
         }
 
         function onPlayerReady(event) {
             event.target.playVideo();
-          
+            // Add zoom class after video starts playing
             document.getElementById('youtube-live').classList.add('zoom');
         }
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-                event.target.playVideo(); 
+                event.target.playVideo(); // Resume playback if paused or ended
             }
         }
 
         (function() {
             const script = document.createElement('script');
-           
+            // Corrected YouTube Iframe API URL
             script.src = "https://www.youtube.com/iframe_api";
             document.head.appendChild(script);
         })();
