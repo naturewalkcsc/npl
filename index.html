@@ -32,19 +32,20 @@
         }
         .panel.bottom {
             z-index: 2;
-            top: 20px; /* Adjust as needed for spacing from the top edge */
-            right: 15px; /* Adjust as needed for spacing from the right edge */
-            left: auto; /* Ensure it doesn't try to position from the left */
-            transform: scale(0.7); /* Keep the scale if you want it smaller */
-            width: 40%; /* Keep your desired width */
-            height: 30%; /* Increase height to make the overlay larger */
+            /* Mobile-first styles (default) */
+            top: 20px;
+            right: 15px;
+            left: auto;
+            width: 60%;
+            height: 15%;
+            transform: scale(0.7);
             transform-origin: top right;
         }
         .panel iframe {
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 8px;
+            border-radius: 8px; /* Added for a cleaner look */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         #youtube-live {
@@ -54,6 +55,18 @@
         }
         #youtube-live.zoom {
             transform: scale(1.2); /* Scale up to 120% of original size */
+        }
+        /* Media query for laptop screens and larger */
+        @media (min-width: 1024px) {
+            .panel.bottom {
+                top: 20px;
+                right: 15px;
+                left: auto;
+                width: 60%;
+                height: 15%;
+                transform: scale(0.7);
+                transform-origin: top right;
+            }
         }
     </style>
 </head>
@@ -72,26 +85,25 @@
             const player = new YT.Player('youtube-live', {
                 height: '100%',
                 width: '100%',
-                videoId: 'uprAp69Qbjc', // Replace YOUR_VIDEO_ID with the actual video ID of the YouTube live stream
+                videoId: 'uprAp69Qbjc',
                 events: {
                     'onReady': onPlayerReady,
                     'onStateChange': onPlayerStateChange
                 },
                 playerVars: {
-                    'autoplay': 1, // Auto-play the video
+                    'autoplay': 1,
                 }
             });
         }
 
         function onPlayerReady(event) {
             event.target.playVideo();
-            // Add zoom class after video starts playing
             document.getElementById('youtube-live').classList.add('zoom');
         }
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-                event.target.playVideo(); 
+                event.target.playVideo();
             }
         }
 
