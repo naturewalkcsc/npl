@@ -32,26 +32,20 @@
         }
         .panel.bottom {
             z-index: 2;
-            /* === ORIGINAL STYLES FOR CENTERING (TO BE REMOVED/MODIFIED) ===
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%) scale(0.7);
-            width: 40%;
-            height: 50%;
-            */
-
-            /* === NEW STYLES FOR TOP-RIGHT POSITIONING === */
-            top: 0px; /* Adjust as needed for spacing from the top edge */
-            right: 0px; /* Adjust as needed for spacing from the right edge */
+            top: 15px; /* Adjust as needed for spacing from the top edge */
+            right: 15px; /* Adjust as needed for spacing from the right edge */
             left: auto; /* Ensure it doesn't try to position from the left */
             transform: scale(0.7); /* Keep the scale if you want it smaller */
             width: 40%; /* Keep your desired width */
-            height: 80%; /* Maintain aspect ratio */
+            height: 15%; /* Reduced height to make the overlay smaller */
+            transform-origin: top right;
         }
         .panel iframe {
             width: 100%;
             height: 100%;
             border: none;
+            border-radius: 8px; /* Added for a cleaner look */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         #youtube-live {
             width: 100%;
